@@ -1,0 +1,278 @@
+# *DISTRIBUTED RULES, DEFINITIONS, LOAD-SHEDDING LOGIC & OPERATIONAL FRAMEWORK*
+
+-----------------------------------------------------------------------------------------------
+
+## *1. Category: Definitions & Rules*
+
+### *Critical Loads (WC)*
+Critical loads must remain powered at all times except in absolute emergencies.
+Examples include hospitals, life-support equipment, emergency services, drinking-water pumps, SCADA/telemetry systems, critical lighting, and sewer pumps.
+They have the highest priority, and power allocation always begins with Critical loads.
+
+### *Sub-Critical Loads (WS)*
+Sub-Critical loads can tolerate short interruptions but must be restored quickly.
+Examples include schools (daytime), offices, municipal buildings, small businesses.
+They have mid-priority and follow business-hour scheduling rules. Curtailment is allowed but must be controlled.
+
+### *Non-Critical Loads (WN)*
+Non-Critical loads are lowest priority and are the first to be shed.
+Examples include residential air-conditioning, water heaters, EV chargers, decorative lighting.
+They can be curtailed for longer durations as they primarily affect comfort, not safety.
+
+-----------------------------------------------------------------------------------------------
+
+## *2. Load-Shedding Rules*
+
+Load shedding follows a strict priority sequence:
+
+*Non-Critical → Sub-Critical → Critical*
+Shedding is triggered when real power generation (WG) falls below required consumption.
+* If WG < WC + WS + WN → shed Non-Critical
+* If WG < WC + WS → shed Sub-Critical
+* If WG < WC → emergency mode; only life-support loads stay ON
+
+This is aligned with the four Generation Cases described below.
+
+-----------------------------------------------------------------------------------------------
+
+## *3. Generation Cases (Mapped to Zones and Operating Conditions)*
+
+### *Case 1 — High Generation (WG > WC + WS + WN)*
+→ *All zones ON (Critical + Sub-Critical + Non-Critical)*
+*Parameter Conditions:*
+
+* Voltage (VG): 210–240 V
+* Current (IG): 50–70% rated
+* Power Factor (PFG): 0.85–1.0
+* Real Power (WG): > total load (e.g., >20 kW)
+* Energy/day (kWhG): Normal (200–400 kWh/day)
+* Frequency (FreqG): 49.5–50.5 Hz
+
+*Meaning:* Grid is stable. All loads safely powered. No shedding.
+Restore all zones and allow normal schedules.
+
+-----------------------------------------------------------------------------------------------
+
+### *Case 2 — Medium Generation (WG > WC + WS)*
+→ *Critical + Sub-Critical ON; Non-Critical OFF*
+*Parameter Conditions:*
+
+* VG: 200–230 V
+* IG: 60–85% rated
+* PFG: 0.80–0.95
+* WG: Enough for Critical + Sub-Critical (15–20 kW)
+* kWhG: Moderate (250–430 kWh/day)
+* FreqG: 49–50.5 Hz
+
+*Meaning:* Non-Critical loads must be shed.
+Sub-Critical loads may continue but must be monitored.
+
+-----------------------------------------------------------------------------------------------
+
+### *Case 3 — Low Generation (WG > WC)*
+→ *Only Critical ON; Sub-Critical + Non-Critical OFF*
+*Parameter Conditions:*
+
+* VG: 190–210 V
+* IG: 70–95% rated
+* PFG: 0.75–0.90
+* WG: Bare minimum (10–15 kW)
+* kWhG: High consumption (350–450 kWh/day)
+* FreqG: 49–49.7 Hz
+
+*Meaning:* Grid is stressed.
+Only essential Critical loads can remain ON.
+
+-----------------------------------------------------------------------------------------------
+
+### *Case 4 — Very Low Generation (WG < WC)*
+→ *Emergency Mode — Only life-support Critical loads ON*
+*Parameter Conditions:*
+
+* VG: <190 V
+* IG: >90–100% rated
+* PFG: <0.75
+* WG: <10 kW
+* kWhG: Very high (>450 kWh/day)
+* FreqG: <49 Hz or >51 Hz
+
+*Meaning:* Even Critical loads cannot be fully supported.
+Disconnect everything except life-support infrastructure.
+Issue emergency alerts and escalate to operators.
+
+-----------------------------------------------------------------------------------------------
+
+## *4. Threshold Rules & Alerts*
+
+### *Voltage (VG)*
+
+* 210–240 V → Normal
+* 200–210 V → Warning
+* <190–200 V → Critical (shedding required)
+* <185 V → Emergency
+
+### *Current (IG)*
+
+* <70% rated → Normal
+* 70–90% rated → Warning
+* > 90–100% rated → Critical
+
+### *Power Factor (PFG)*
+
+* ≥0.85 → Normal
+* 0.80–0.85 → Warning
+* <0.80 → Critical (heavy reactive load causing instability)
+
+### *Frequency (FreqG)*
+
+* 49.5–50.5 Hz → Stable
+* 49–49.5 Hz → Warning
+* <49 Hz or >51 Hz → Unstable / Emergency
+
+### *Alert Structure*
+
+Each alert must include:
+timestamp, measured parameter, affected zones, severity (Info/Warning/Critical), recommended automatic or operator action.
+
+-----------------------------------------------------------------------------------------------
+
+## *5. Scheduling Rules*
+
+1. *Critical loads* receive power 24/7, no interruption except emergency.
+2. *Sub-Critical loads* run on scheduled windows based on available surplus WG.
+3. *Non-Critical loads* operate only when WG is high (Case 1).
+4. *Staggered restoration* to prevent inrush currents.
+5. *Time-of-day scheduling:*
+
+   * Peak hours: shed WN, limit WS
+   * Off-peak: restore WS and WN if WG allows
+6. *Predictive scheduling:*
+
+   * If forecasted WG drop occurs → shed early
+   * Use historical patterns to allocate loads efficiently
+
+------------------------------------------------------------------------------------------------
+
+## *6. Priority Policies*
+
+### *Priority Ranking*
+
+1. Life-safety Critical (ICU, life-support)
+2. Emergency infrastructure (water supply, traffic lights)
+3. Operational Critical (police comms, shelters)
+4. High-priority Sub-Critical (schools during active hours)
+5. Lower-priority Sub-Critical (offices, small businesses)
+6. Non-Critical (residential HVAC, EV chargers)
+
+Policies ensure that shedding follows this order and restoration is reversed in order.
+
+--------------------------------------------------------------------------------------------------
+
+## *7. Shedding Simulation & Timeline*
+
+### *Stage 0 — Normal (Case 1)*
+All loads ON.
+
+### *Stage 1 — Warning*
+VG dips, WG trending downward. Notify users. Reduce flexible loads.
+
+### *Stage 2 — Non-Critical Shed (Case 2)*
+WN disconnected. WS continues.
+
+### *Stage 3 — Sub-Critical Shed (Case 3)*
+Only Critical loads remain.
+
+### *Stage 4 — Emergency (Case 4)*
+Only life-support loads ON.
+Trigger operator escalation and activate backup systems.
+
+Restoration is done slowly and staggered to avoid inrush.
+
+--------------------------------------------------------------------------------------------------
+
+## *8. Redundancy Checks & Hardening*
+
+* Ensure UPS/generators for Critical loads have sufficient runtime.
+* Validate SCADA telemetry is operational.
+* Log every shedding/restoration event.
+* Run periodic drills for Case 3 & 4 scenarios.
+* Maintain manual override procedures & responsible personnel list.
+
+--------------------------------------------------------------------------------------------------
+
+## *9. Real-Time Dashboard Requirements*
+
+A complete dashboard must show:
+
+* Real-time VG, IG, PFG, WG, FreqG, kWhG
+* Zone status (Critical/Sub-Critical/Non-Critical) with color-coded indicators
+* Total demand vs WG surplus/deficit
+* Alerts (Warning / Critical / Emergency)
+* Historical graphs (24 hr–30 days)
+* Auto-generated recommendations based on trends
+
+--------------------------------------------------------------------------------------------------
+
+## *10. Monitoring Queries (Your JSON Set Mapped to System Behavior)*
+
+### *Real-time monitoring*
+
+* query_001 Critical Load Monitoring
+* query_007 Voltage & Current Risk
+* query_021 Critical Alerts
+* query_022 Sub-Critical Alerts
+* query_023 Non-Critical Forecast Alerts
+
+### *Scheduling & Optimization*
+
+* query_019 Load Scheduling Optimization
+* query_027 Critical Load Allocation
+* query_028 Sub-Critical Allocation
+* query_029 Non-Critical Allocation
+
+### *Predictive & Simulation*
+
+* query_006 Predictive Load Management (24-hour forecasting)
+* query_017 Sudden WG Drop Simulation
+* query_018 Sudden WN Increase Simulation
+
+### *Historical Analysis*
+
+* query_005 Historical Shedding Statistics
+* query_020 Historical Electrical Trends
+* query_030 Shedding Efficiency Analysis
+* query_031–033 Predictive Forecasts for all zones
+
+### *Executive Reports*
+
+* query_008 Executive Load Optimization Report
+
+All queries interact with the same system but provide different layers of insight—real-time, predictive, historical, and optimization.
+
+--------------------------------------------------------------------------------------------------
+
+## *11. Total Load vs Generation Analysis*
+
+Total demand = *WC + WS + WN*
+Compare against WG:
+
+* If WG > total → Case 1
+* If WG > WC + WS → Case 2
+* If WG > WC → Case 3
+* If WG < WC → Case 4 (emergency)
+
+This formula determines which zones stay ON and which are shed.
+
+--------------------------------------------------------------------------------------------------
+
+## *12. Quick Operator Checklist*
+
+1. Read VG, IG, PFG, WG, kWhG, FreqG.
+2. Calculate WC + WS + WN.
+3. Compare WG with demand:
+
+   * WG ≥ WC+WS+WN → All ON
+   * WG ≥ WC+WS → Shed Non-Critical
+   * WG ≥ WC → Shed Sub-Critical
+   * WG < WC → Emergency shedding
+4. Execute recommended alerts and log events.

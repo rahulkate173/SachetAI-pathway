@@ -1,0 +1,54 @@
+Scenario Logic (User Manual)
+
+The microgrid monitoring system continuously measures real-time electrical parameters such as voltage, current, power generation, and power factor. Based on these live values, the system displays the operating condition of three load zones. This helps the user understand how much power is currently available from the solar source and which loads can be safely operated.
+The connected loads are grouped into three priority zones:
+
+1. Critical Zone – Essential loads that should remain powered whenever possible.
+Examples: Hospitals, data centers, emergency lighting, water pumping for essential supply, life-support equipment.
+
+2. Sub-Critical Zone – Medium-priority loads that operate only when sufficient power is available after supplying critical loads.
+Examples: Small industries, office lighting, fans, refrigerators, commercial equipment.
+
+3. Non-Critical Zone – Low-priority loads that operate only when there is high surplus power.
+Examples: Street lighting, non-essential appliances, decorative lighting, electric vehicle charging.
+
+To determine the zone status, the system compares the available solar power generation (WG) with the power required by each zone:
+WC – Critical load requirement
+WS – Sub-Critical load requirement
+WN – Non-Critical load requirement
+
+Based on this comparison, one of the following scenarios is shown on the dashboard:
+
+
+--------------------------------------------------------------------------------------------------
+
+Scenario 1 – High Power Generation
+
+Condition: WG > WC + WS + WN
+System Response: All three zones (Critical, Sub-Critical, Non-Critical) remain ON.
+User Interpretation: Sufficient solar power is available. All loads can operate together without limitations.
+--------------------------------------------------------------------------------------------------
+
+Scenario 2 – Medium Power Generation
+Condition: WG > WC + WS but WG < WC + WS + WN
+System Response: Critical and Sub-Critical zones remain ON; Non-Critical zone switches OFF.
+User Interpretation: Power is moderately available. Essential and medium loads can run, but heavy or optional loads should remain OFF.
+--------------------------------------------------------------------------------------------------
+
+Scenario 3 – Low Power Generation
+Condition: WG > WC but WG < WC + WS
+System Response: Only the Critical zone remains ON; Sub-Critical and Non-Critical zones switch OFF.
+User Interpretation: Power is limited. Only essential loads should be used. All additional loads must stay OFF.
+-----------------------------------------------------------------------------------------------
+
+Scenario 4 – Very Low Power Generation
+Condition: WG < WC
+System Response: Critical zone stays ON with a low-power alert; Sub-Critical and Non-Critical zones remain OFF.
+User Interpretation: Solar power is extremely low. Only emergency loads should remain ON. Users should minimize consumption to avoid instability.
+
+
+Purpose of This Logic
+
+This scenario logic helps the user clearly understand the real-time power condition of the microgrid. By viewing the zone indicators and scenario messages, the user can operate loads safely, avoid overload conditions, and maintain stable microgrid performance.
+
+

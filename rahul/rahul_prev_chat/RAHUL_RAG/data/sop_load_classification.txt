@@ -1,0 +1,68 @@
+1. Title
+    SOP for Classifying Grid Generation & Zone Activation
+2. Purpose
+    Define the rule-based classification of grid conditions and load activation based on voltage, current, PF, real power, daily energy, and frequency.
+3. Scope
+    Applies to all classification decisions in real-time.
+4. Parameter Definitions
+    VG, IG, PFG, WG, kWhG, FreqG (same as previous SOP).
+5. Responsibilities
+    •	Classification Engine: Applies rules
+    •	Reasoning Engine: Generates explanations
+    •	KB Module: Stores rule outcomes
+________________________________________
+6. Classification Logic (Strict Rules)
+________________________________________
+🟩 Case 1 – High Generation (WG > WC + WS + WN)
+    → All zones ON: Critical + Sub-Critical + Non-Critical
+    Conditions:
+    •	VG: 210–240 V
+    •	IG: 50–70% rated
+    •	PFG: 0.85–1.0
+    •	WG: > Total demand (20+ kW)
+    •	kWhG: 200–400 kWh/day
+    •	FreqG: 49.5–50.5 Hz
+Meaning: Stable grid → full load allowed.
+________________________________________
+🟨 Case 2 – Medium Generation (WG > WC + WS)
+    → Critical + Sub-Critical ON, Non-Critical OFF
+    Conditions:
+    •	VG: 200–230 V
+    •	IG: 60–85% rated
+    •	PFG: 0.80–0.95
+    •	WG: 15–20 kW
+    •	kWhG: 250–430 kWh/day
+    •	FreqG: 49–50.5 Hz
+    Meaning: Moderate grid → shed non-critical loads.
+________________________________________
+🟧 Case 3 – Low Generation (WG > WC)
+    → Only Critical ON
+    Conditions:
+    •	VG: 190–210 V
+    •	IG: 70–95% rated
+    •	PFG: 0.75–0.90
+    •	WG: 10–15 kW
+    •	kWhG: 350–450 kWh/day
+    •	FreqG: 49–49.7 Hz
+    Meaning: Stressed grid → preserve only essential loads.
+________________________________________
+🟥 Case 4 – Very Low Generation (WG < WC)
+    → Emergency Mode: Only life-supporting loads ON
+    Conditions:
+    •	VG: < 190 V
+    •	IG: 90–100% rated
+    •	PFG: < 0.75
+    •	WG: < 10 kW
+    •	kWhG: > 450 kWh/day
+    •	FreqG: < 49 Hz or > 51 Hz
+        Meaning: Grid cannot handle load → shutdown except life-support.
+________________________________________
+7. Exception Rules
+    •	Device error → classification stalled
+    •	High frequency spikes → emergency mode
+    •	Voltage outage → zones all OFF + alarm
+8. Logs
+    Classification results stored every cycle with timestamp.
+9. Version Control
+    v1.0 – Rahul – 09/Dec/2025
+

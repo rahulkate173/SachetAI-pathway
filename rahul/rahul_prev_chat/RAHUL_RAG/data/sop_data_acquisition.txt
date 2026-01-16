@@ -1,0 +1,44 @@
+1. Title
+Real-Time Grid Monitoring – Data Acquisition SOP
+2. Purpose
+Standardize the process of collecting voltage, current, PF, real power, frequency, and energy values from connected grid devices.
+3. Scope
+Applies to all devices in the 10 kV Odisha distribution system and backend pipeline.
+4. Definitions
+    •	VG – Grid Voltage
+    •	IG – Grid Current
+    •	PFG – Power Factor
+    •	WG – Real Power Generation
+    •	kWhG – Energy Generation (24h)
+    •	FreqG – Frequency
+5. Responsibilities
+    •	Acquisition Module: Pulls device readings
+    •	Validation Module: Checks data integrity
+    •	Storage Module: Saves into database
+6. Prerequisites
+    •	Device API active
+    •	Device ID mappings
+    •	Database connection
+    •	Auth token or MQTT subscription
+7. Procedure
+    1.	Request latest readings from each device.
+    2.	Parse response (JSON/Modbus/MQTT).
+    3.	Validate:
+        o	No null values
+        o	Timestamp difference < 5 minutes
+    4.	Log raw data.
+    5.	Store readings:
+        o	VG, IG, PFG
+        o	WG, kWhG
+        o	FreqG
+        o	device_id, timestamp
+    6.	Trigger classification module.
+8. Exception Handling
+    •	No response → retry 3 times → mark device offline
+    •	Out-of-range values → flag anomaly
+    •	Missing fields → store partial record + alert
+9. Documentation
+Store daily logs in DB and backup server.
+10. Version Control
+v1.0 – Rahul – 09/Dec/2025
+

@@ -1,0 +1,54 @@
+1. The system measures all electrical values in real time
+– Solar/wind generation
+– Battery voltage & current
+– Grid input condition
+– Inverter input/output
+– Load consumption of all three zones
+
+
+2. Sensors collect accurate data
+– PZEM modules measure voltage, current, power factor
+– CT sensors measure zone-wise current
+– Shunt & voltage divider measure battery parameters
+
+
+3. The controller analyzes the collected data
+– Checks how much power is available
+– Compares available power with the demand of each zone
+– Identifies low generation or overload conditions
+
+
+4. The system decides which loads should remain ON
+– Critical loads get the highest priority
+– Sub-critical and non-critical loads operate only if extra power is available
+– Prevents overload and protects equipment
+
+
+5. The system automatically controls relays
+– Turns ON/OFF zones based on priority
+– Manages battery charging
+– Switches between solar, battery, and grid as needed
+
+
+6. The inverter and grid logic operate automatically
+– Grid power is used when available
+– Inverter supplies power during grid failure
+– System prevents reverse power and low-voltage issues
+
+
+7. The controller updates the dashboard continuously
+– Shows active zones
+– Displays power generation and consumption
+– Indicates grid, battery, and inverter status
+
+
+8. Alerts are generated when needed
+– Low power
+– Overload
+– Low battery
+– Zone OFF/ON notifications
+
+
+9. All actions happen automatically
+– No manual switching required
+– Ensures stable, safe, and uninterrupted operation

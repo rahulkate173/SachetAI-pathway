@@ -1,0 +1,86 @@
+1. Title
+    SOP for Updating Text-Based Knowledge Base & Chatbot Reasoning Workflow
+2. Purpose
+    Define how SOPs stored as text files (Markdown, TXT, DOCX) are updated, indexed, and used by the chatbot during reasoning.
+3. Scope
+    Applies to all text documents inside the knowledge base folder used by the RAG system.
+4. File Structure (Text-Based KB Only)
+    Your knowledge base contains multiple SOPs as individual text files:
+    data/
+    sop_data_acquisition.txt
+    sop_load_classification.txt
+    sop_load_scheduling.txt
+    sop_reasoning_and_kb_update.txt
+    Each file acts as an independent knowledge entity.
+
+5. KB Update Procedure (TEXT FILES)
+    Step 1 — Identify the SOP that needs update
+        Examples:
+        Modify ranges for voltage
+        Update thresholds
+        Add new cases
+        Change scheduling logic
+    Step 2 — Edit the text file directly
+        Rules are kept as plain text, for example:
+        Case 2 – Medium Generation:
+            Voltage range 200–230 V
+            Critical + sub-critical ON
+            Non-critical OFF
+    Step 3 — Save the updated text file
+        Files should follow these rules:
+        Clear headings
+        Simple sentences
+        Consistent formatting
+    Step 4 — Re-index in RAG system
+        Since the KB is text-only:
+        The embeddings for this file must be regenerated.
+        RAG must rebuild the vector index (FAISS/Chroma).
+        Old embeddings must be cleared or overwritten.
+        This ensures the chatbot retrieves the updated rules.
+    Step 5 — Validate retrieval
+        Test with typical prompts:
+        “What happens in low generation?”
+        “When do non-critical loads turn off?”
+        “How is load scheduling done?”
+        Ensure answers reflect updated text.
+
+6. Chatbot Reasoning Flow (Text-Based)
+    Step 1 — User asks a query
+        Example: “Why did non-critical loads shut down?”
+    Step 2 — Retriever fetches relevant text chunks
+        Because everything is text, RAG breaks the file into:
+        Paragraphs
+        Bullet points
+        Sentences
+    Step 3 — Reasoning engine applies logic
+        The chatbot reads the retrieved text and:
+        Identifies the matching case
+        Applies threshold rules
+        Generates reasoning
+        Produces a final explanation
+    Step 4 — Final Answer is constructed
+        The system uses the text + logic to explain the decision:
+        Example response:
+        Non-critical loads were turned OFF because the system detected Medium Generation. Voltage was 205V and real power was enough only for critical and sub-critical zones.
+7. Exception Handling (For Text KB)
+    If text file is missing:
+        → System logs “Knowledge file not found.”
+    If file has formatting errors:
+        → Embeddings may be incorrect → fix text and re-index.
+    If RAG fails to retrieve updated content:
+        → Clear vector cache and re-run indexing.
+    If two SOPs have conflicting rules:
+        → Latest file version takes priority (timestamp-based).
+
+8. Version Control Rules
+    Every text SOP update must include at bottom:
+        Version: v1.1
+        Updated by: Rahul
+        Date: 10 Dec 2025
+        Change: Adjusted Case 3 voltage range from 190–210 to 185–210.
+    File naming format:
+        sop_<topic>_vX.Y.txt
+    Older versions must be archived:
+        archive/sop_load_classification_v1.0.txt
+        archive/sop_load_classification_v0.9.txt
+

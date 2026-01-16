@@ -1,0 +1,31 @@
+CASE 1 – HIGH GENERATION
+Condition: WG > WC + WS + WN
+Action: All zones ON (Critical, Sub-Critical, Non-Critical)
+Voltage: 210–240 V
+Current: 50–70% rated
+PF: 0.85–1.0
+Meaning: Stable grid, enough power for all loads.
+-------------------------------------------------------
+CASE 2 – MEDIUM GENERATION
+Condition: WG > WC + WS
+Action: Critical + Sub-Critical ON, Non-Critical OFF
+Voltage: 200–230 V
+Current: 60–85%
+PF: 0.80–0.95
+Meaning: System can handle essential + moderate loads.
+-----------------------------------------------
+CASE 3 – LOW GENERATION
+Condition: WG > WC
+Action: Only Critical zone ON
+Voltage: 190–210 V
+Current: 70–95%
+PF: 0.75–0.90
+Meaning: Grid stressed, keep only critical loads running.
+-------------------------------------------------------------------
+CASE 4 – VERY LOW GENERATION
+Condition: WG < WC
+Action: Emergency Mode — only life-support loads ON
+Voltage: < 190 V
+Current: > 90%
+PF < 0.75
+Meaning: Generation insufficient; emergency cut-off triggered.

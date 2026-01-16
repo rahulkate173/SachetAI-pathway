@@ -1,0 +1,114 @@
+Operator Guidelines (User Manual)
+
+These guidelines help the operator use the microgrid monitoring and control system safely, efficiently, and without damaging any connected equipment.
+
+
+--------------------------------------------------------------------------------------------------
+
+1. Before Starting the System
+
+    1. Ensure all wiring connections are properly tightened and insulated.
+
+    2. Check that the solar panels, battery, and inverter connections are correctly installed.
+
+    3. Confirm that the grid power input (if available) is stable.
+
+    4. Verify that all sensors (PZEM, CT, shunt) are correctly placed and reading values.
+
+    5. Make sure the load zones are connected according to their priority (Critical, Sub-Critical, Non-Critical).
+
+
+-----------------------------------------------------------------------------------------------------
+
+2. Normal Operation
+
+    1. Turn ON the main system power supply.
+
+    2. Observe the dashboard to confirm:
+    Solar generation (WG)
+    Battery voltage and SOC
+    Grid availability
+    Load zone status (ON/OFF)
+
+    3. Allow the system to automatically manage loads—no manual switching is needed.
+
+    4. Always keep Critical loads connected only in Zone 1.
+
+    5. Avoid connecting high-power appliances in Zone 2 and Zone 3 during low generation.
+
+-----------------------------------------------------------------------------------------------------
+
+3. During High Solar Power
+
+    1. Operate all three zones normally.
+    2. Use high-power appliances (motors, pumps, EV chargers) during this period.
+    3. Allow the battery to charge full.
+
+-----------------------------------------------------------------------------------------------------
+
+4. During Medium Solar Power
+
+    1. Use only essential and medium-priority loads.
+    2. Avoid turning ON unnecessary appliances in Zone 3.
+    3. Check that battery charging is not interrupted.
+
+-----------------------------------------------------------------------------------------------------
+
+5. During Low Solar Power
+
+    1. Switch OFF non-essential appliances manually, if required.
+    2. Keep only critical loads running.
+    3. Do not operate motors, irons, heaters, or EV chargers.
+    4. Monitor battery voltage closely.
+
+-----------------------------------------------------------------------------------------------------
+
+6. During Very Low Power or Cloudy Weather
+
+    1. Reduce load usage immediately.
+    2. Keep only emergency loads running.
+    3. Follow system alerts strictly (Low Power / Low Battery).
+    4. Allow the battery to recover without heavy load.
+
+-----------------------------------------------------------------------------------------------------
+
+7. During Grid Outage
+
+    1. Do not operate heavy or inductive loads.
+    2. Let the inverter and battery handle only essential loads.
+    3. Avoid frequent switching ON/OFF of devices.
+
+-----------------------------------------------------------------------------------------------------
+
+8. Safety Guidelines
+
+    1. Never bypass relays or protection circuits.
+    2. Do not tamper with sensor wiring.
+    3. Keep the system enclosure dry and dust-free.
+    4. Disconnect power before performing any maintenance.
+    5. Only qualified technical staff should handle repairs.
+
+-----------------------------------------------------------------------------------------------------
+
+9. Dashboard / Display Usage
+
+    1. Check zone status indicators (ON/OFF).
+    2. Monitor real-time power readings.
+    3. Respond to warning/alert messages immediately.
+    4. Do not ignore low battery or overload notifications.
+
+-----------------------------------------------------------------------------------------------------
+
+10. Communication & Alerts
+
+    1. GSM/LTE alerts must be enabled for remote monitoring.
+    2. Ensure the SIM card has valid network coverage.
+    3. Respond quickly to overload, low battery, or grid failure alerts.
+
+-----------------------------------------------------------------------------------------------------
+
+11. Recommended Best Practices
+    1. Plan high-power work during peak sunlight hours.
+    2. Keep zone loads within their rated capacity.
+    3. Periodically check sensor readings for abnormalities.
+    4. Maintain battery health by avoiding deep discharge.

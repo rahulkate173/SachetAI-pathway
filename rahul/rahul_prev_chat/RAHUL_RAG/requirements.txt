@@ -1,0 +1,25 @@
+pip-system-certs
+
+# Core LangChain
+langchain-chroma
+langchain-groq
+langchain-community
+langchain-huggingface
+
+# Embeddings
+sentence-transformers
+torch
+
+# Document Loaders
+PyMuPDF
+unstructured-client
+langchain-excel-loader
+python-pptx
+python-docx
+openpyxl
+pandas
+
+# Utilities
+python-dotenv
+tqdm
+numpy
