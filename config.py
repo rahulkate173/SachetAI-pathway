@@ -14,9 +14,9 @@ class Settings:
     PORT = int(os.getenv("PORT", 8000))
     
     # FIXED: Updated model names
-    EMBEDDING_MODEL = "models/embedding-001"
+    EMBEDDING_MODEL = "models/gemini-embedding-001"
     EMBEDDING_DIM = 768
-    LLM_MODEL = "gemini-1.5-flash-latest"
+    LLM_MODEL = "models/gemini-3-pro-preview"
     
     CHUNK_SIZE = 300
     MAX_DOCS = 100
@@ -47,3 +47,5 @@ class Settings:
 
 
 settings = Settings()
+
+
