@@ -1,7 +1,8 @@
 import { useState } from "react";
 import ChatInput from "./ChatInput";
 import { startRecording, stopRecording } from "../api/voiceRecorder";
-// import { sendTextMessage, sendVoiceMessage } from "../api/chatApi";
+import { sendChatMessage } from "../api/chatApi";
+
 
 export default function ChatArea() {
   const [messages, setMessages] = useState([]);
@@ -9,12 +10,39 @@ export default function ChatArea() {
 
   
 
-  const handleSend = async (text) => {
+ const handleSend = async (text) => {
+  if (!text.trim()) return;
+
   // 1. Show user message immediately
   setMessages((prev) => [
     ...prev,
     { role: "user", content: text },
   ]);
+
+  try {
+    // 2. Call backend
+    const response = await sendChatMessage(text);
+
+    // 3. Show assistant response
+    setMessages((prev) => [
+      ...prev,
+      {
+        role: "assistant",
+        content: response.answer || "No answer returned",
+      },
+    ]);
+  } catch (err) {
+    console.error("Chat API error:", err);
+    setMessages((prev) => [
+      ...prev,
+      {
+        role: "assistant",
+        content: "Backend error. Please try again.",
+      },
+    ]);
+  }
+};
+
 
   // 2. Call backend (to be implemented by backend team)
   // const response = await sendTextMessage(text);
@@ -24,7 +52,7 @@ export default function ChatArea() {
   //   ...prev,
   //   { role: "assistant", content: response.answer },
   // ]);
-};
+
 
 
   const handleVoice = async () => {
@@ -40,7 +68,7 @@ export default function ChatArea() {
   };
 
   return (
-    <div className="flex flex-col h-full bg-white">
+     <div className="flex flex-col min-h-full bg-white">
       
       {/* Header */}
       <div className="border-b border-slate-200 px-6 py-5">
@@ -54,7 +82,7 @@ export default function ChatArea() {
       </div>
 
       
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1">
         
         {/* Welcome Panel */}
         {messages.length === 0 && (

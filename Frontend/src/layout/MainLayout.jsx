@@ -9,8 +9,9 @@ export default function MainLayout() {
 
   return (
     <div
-      className={`h-screen w-screen grid transition-all duration-300 bg-gray-100
-        ${
+      className={`min-h-screen w-screen grid transition-all duration-300 bg-gray-100*
+      <div
+      ${
           collapsed
             ? showAlertFeed
               ? "grid-cols-[64px_1fr_360px]"

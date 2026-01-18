@@ -19,7 +19,7 @@ export default function AlertFeed({ onClose }) {
   }, []);
 
   return (
-    <div className="h-screen bg-white p-4 flex flex-col gap-4 border-l border-slate-200">
+    <div className=" bg-white p-4 flex flex-col gap-4 border-l border-slate-200">
 
       
       {/* Header */}
@@ -55,7 +55,7 @@ export default function AlertFeed({ onClose }) {
       </div>
 
       {/* Alert Cards */}
-      <div className="grid grid-rows-3 gap-4 flex-1">
+      <div className="grid grid-rows-3 gap-4 ">
         <AlertCritical onClick={() => setActiveSpot("solapur")} />
         <AlertWarning onClick={() => setActiveSpot("mahabaleshwar")} />
         <AlertResolved onClick={() => setActiveSpot("akkalkot")} />

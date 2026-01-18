@@ -114,9 +114,10 @@ export default function Sidebar({ collapsed, setCollapsed }) {
 
   return (
     <div
-      className={`relative flex flex-col h-screen bg-slate-900 text-white transition-all duration-300
-      ${collapsed ? "w-16" : "w-64"}`}
+      className={`relative flex flex-col min-h-full bg-slate-900 text-white transition-all duration-300
+       ${collapsed ? "w-16" : "w-64"}`}
     >
+
       {/* Collapse Button */}
       <button
         onClick={() => setCollapsed(!collapsed)}
@@ -126,7 +127,8 @@ export default function Sidebar({ collapsed, setCollapsed }) {
       </button>
 
       {/* Scrollable Content */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3">
+      <div className="flex-1 p-4 space-y-3">
+
         {/* Profile */}
         <div className="flex items-start gap-3">
           <div className="h-9 w-9 rounded-full bg-orange-500 flex items-center justify-center font-semibold">
