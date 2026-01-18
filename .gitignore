@@ -9,6 +9,7 @@ wheels/
 # Virtual environments
 .venv
 .env
+# folders 
 aditya/
 rahul/
 saanidhi/
