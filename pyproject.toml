@@ -5,7 +5,9 @@ description = "NDRF disaster response system for Maharashtra using real-time RAG
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "google-generativeai>=0.4.0",
+    "langchain>=0.1.0",
+    "langchain-groq>=0.1.0",
+    "sentence-transformers>=2.2.0",
     "fastapi>=0.104.0",
     "uvicorn>=0.24.0",
     "requests>=2.31.0",

@@ -6,31 +6,29 @@ from pipeline import DataPipeline
 
 
 class RAGEngine:
-    
+
     def __init__(self):
         self.pipe = DataPipeline()
         self._model = None
         self._history = []
-    
-    def _gemini(self):
+
+    def _get_llm(self):
         if self._model is None:
-            import google.generativeai as genai
-            genai.configure(api_key=settings. GEMINI_API_KEY)
-            self._model = genai. GenerativeModel(
-                model_name=settings.LLM_MODEL,
-                generation_config={
-                    "temperature": 0.3,
-                    "max_output_tokens": 800,
-                }
+            from langchain_groq import ChatGroq
+            self._model = ChatGroq(
+                api_key=settings.GROQ_API_KEY,
+                model=settings.LLM_MODEL,
+                temperature=0.3,
+                max_tokens=800,
             )
         return self._model
-    
+
     def start(self):
         self.pipe.start()
-    
+
     def stop(self):
         self.pipe.stop()
-    
+
     def _system_prompt(self):
         now = datetime.now().strftime("%Y-%m-%d %H:%M IST")
         return f"""You are NDRF Disaster Response Assistant for Maharashtra. 
@@ -57,22 +55,23 @@ Emergency Numbers:
 
     def _context(self, query):
         results = self.pipe.query(query)
-        
+
         if not results:
             return "No current data.  Providing general guidance."
-        
+
         parts = []
         for i, r in enumerate(results, 1):
             doc = r["doc"]
             score = r["score"]
             src = doc. get("metadata", {}).get("source", "unknown")
-            parts.append(f"[{i}.  {src}] (score: {score:.2f})\n{doc['content']}")
-        
+            parts.append(
+                f"[{i}.  {src}] (score: {score:.2f})\n{doc['content']}")
+
         return "\n\n---\n\n".join(parts)
-    
+
     def ask(self, question):
         ctx = self._context(question)
-        
+
         prompt = f"""{self._system_prompt()}
 
 ---
@@ -85,14 +84,14 @@ REAL-TIME DATA:
 USER QUESTION:  {question}
 
 Answer based on the data above.  If data is insufficient, provide general safety advice."""
-        
+
         try:
-            model = self._gemini()
-            response = model.generate_content(prompt)
-            answer = response.text
+            llm = self._get_llm()
+            response = llm.invoke(prompt)
+            answer = response.content
         except Exception as e:
             answer = f"Error: {e}\n\nEmergency contacts:\n- NDRF: 011-24363260\n- Emergency: 112"
-        
+
         result = {
             "answer": answer,
             "query": question,
@@ -100,13 +99,13 @@ Answer based on the data above.  If data is insufficient, provide general safety
             "sources": ["NDRF", "NewsAPI"],
             "docs": self.pipe.index.count()
         }
-        
+
         self._history.append({"q": question[: 80], "t": result["time"]})
         if len(self._history) > 20:
             self._history.pop(0)
-        
+
         return result
-    
+
     def status(self):
         ps = self. pipe.status()
         return {
@@ -115,7 +114,7 @@ Answer based on the data above.  If data is insufficient, provide general safety
             "updated": ps["updated"],
             "queries": len(self._history)
         }
-    
+
     def refresh(self):
         self.pipe.refresh()
         return {"msg": "refreshed", "docs": self.pipe.index.count()}
