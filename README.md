@@ -48,6 +48,16 @@
 
 ## Setup Instructions
 
+### .env 
+ Create and .env file and write:
+ ```
+ GEMINI_API_KEY=<your-gemini-api-key>
+NEWSAPI_KEY=<your-news-api-key>
+HOST=127.0.0.1
+PORT=8000
+
+ ```
+
 ### Backend
 
 ```bash
@@ -61,6 +71,10 @@ cp .env.example .env
 # Example:
 # GEMINI_API_KEY="YOUR_API_KEY_HERE"
 
+```
+Backend server will run at:
+```
+http://127.0.0.1:8000/
 ```
 ### Frontend
 ```bash
