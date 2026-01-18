@@ -1,46 +1,82 @@
-# SachetAI - NDRF Disaster Response System
+# SachetAI – NDRF Disaster Response System
 
-Real-time disaster information system for Maharashtra using Pathway RAG. 
+**SachetAI** is a real-time disaster-response AI assistant designed for **NDRF operators and emergency responders** in Maharashtra. It integrates a **retrieval-augmented generation (RAG) pipeline**, voice + text conversational AI, live alerts, and interactive mapping to provide actionable disaster information.
 
-## Setup
+---
+
+## Project Overview
+
+- Real-time tracking of **floods, cyclones, landslides, and evacuation routes**.
+- Supports **text + voice queries**.
+- Provides **actionable emergency insights** for NDRF teams.
+- Combines **FastAPI backend** with a **React + Tailwind frontend**.
+- Built to demonstrate a fully functional operational workflow while allowing modular integration.
+
+---
+
+## Tech Stack
+
+**Backend:**
+
+- Python 3.11+
+- FastAPI
+- RAG (Retrieval-Augmented Generation)
+- Gemini / Generative AI API for embeddings & LLM
+- Uvicorn
+
+**Frontend:**
+
+- React + Vite
+- Tailwind CSS
+- Leaflet + OpenStreetMap
+- Lucide React icons
+- Web MediaRecorder API
+- React Hooks for state management
+
+---
+
+## Team Roles
+
+| Team Member | Contribution |
+|-------------|-------------|
+| Rahul       | Backend + API integration |
+| Yashodeep   | RAG pipeline implementation |
+| Saanidhi    | Frontend UI & integration |
+| Aditya      | Pipeline monitoring & deployment |
+
+---
+
+## Setup Instructions
+
+### Backend
 
 ```bash
 # Install dependencies
 uv sync
 
-# Configure
+# Configure environment
 cp .env.example .env
-# Add your OPENAI_API_KEY
+
+# Add your Gemini API key in the .env file
+# Example:
+# GEMINI_API_KEY="YOUR_API_KEY_HERE"
+
 ```
-
-## Usage
-
+### Frontend
 ```bash
-# Server mode (default)
-uv run python main.py
+# Navigate to frontend folder
+cd Frontend
 
-# Interactive CLI
-uv run python main.py --cli
+# Install dependencies
+npm install
 
-# Quick test
-uv run python main. py --test
+# Start development server
+npm run dev
 ```
 
-## API
+The app will run at:
 
-- `POST /api/query` - Ask disaster questions
-- `GET /api/status` - System status  
-- `POST /api/refresh` - Refresh data
+```
+http://localhost:5173
+```
 
-## Sample Questions
-
-- Current Sholapur flood rescue status?
-- Latest landslide evacuation routes? 
-- NDRF teams deployed in Maharashtra? 
-
-## Team
-
-- Aditya
-- Rahul
-- Saanidhi
-- Yashodeep
