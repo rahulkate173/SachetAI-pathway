@@ -21,7 +21,7 @@
 - Python 3.11+
 - FastAPI
 - RAG (Retrieval-Augmented Generation)
-- Gemini / Generative AI API for embeddings & LLM
+- Groq AI API for embeddings & LLM
 - Uvicorn
 
 **Frontend:**
@@ -54,14 +54,17 @@
 # Install dependencies
 uv sync
 
-# Configure environment
-cp .env.example .env
+# Configure your Groq api key in .env file
+Example: GROQ_API_KEY="YOUR_API_KEY_HERE"
 
-# Add your Gemini API key in the .env file
-# Example:
-# GEMINI_API_KEY="YOUR_API_KEY_HERE"
+# Run command for RAG model (Backend)
+uv run python main.py
+
+# The app will run at:
+http://localhost:8000
 
 ```
+
 ### Frontend
 ```bash
 # Navigate to frontend folder
@@ -72,35 +75,11 @@ npm install
 
 # Start development server
 npm run dev
-```
 
-The app will run at:
-
-```
+# The app will run at:
 http://localhost:5173
 
 ```
-
-# SachetAI - NDRF Disaster Response System
-
-## Complete Architecture & Pipeline Documentation
-
----
-
-## 📋 Table of Contents
-
-1. [System Overview](#system-overview)
-2. [High-Level Architecture](#high-level-architecture)
-3. [Core Components](#core-components)
-4. [Data Pipeline](#data-pipeline)
-5. [RAG Pipeline](#rag-pipeline)
-6. [API Architecture](#api-architecture)
-7. [Data Flow](#data-flow)
-8. [Technology Stack](#technology-stack)
-9. [Deployment Architecture](#deployment-architecture)
-10. [Security & Performance](#security--performance)
-
----
 
 ## System Overview
 
